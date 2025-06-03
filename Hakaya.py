@@ -35,5 +35,4 @@ with tab2:
             with open(f"{FOLDER}/{filename}", "r", encoding="utf-8") as f:
                 content = f.read()
             st.subheader(f"📌 {filename.replace('.txt', '')}")
-            st.write(content) 
-تحديث لعرض الحكايات
+            st.write(content)
