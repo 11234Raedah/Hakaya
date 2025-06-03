@@ -77,4 +77,3 @@ elif option == "عرض الحكايات":
         selected = st.selectbox("اختر الحكاية", stories)
         with open(f"{folder}/{selected}", "r", encoding="utf-8") as f:
             st.text(f.read())
-            تحديث الواجهة وإضافة الحماية بكلمة سر
