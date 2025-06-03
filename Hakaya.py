@@ -8,10 +8,10 @@ st.set_page_config(
     layout="centered"
 )
 
-# تخصيص التصميم
+# تخصيص التصميم (ألوان + خط + لوقو)
 st.markdown("""
     <style>
-        .main {
+        body {
             background-color: #f5f0e6;
         }
         .block-container {
@@ -20,14 +20,15 @@ st.markdown("""
             border-radius: 15px;
             border: 2px solid #c8b28e;
         }
-        h1, h2, h3 {
-            color: #5c4328;
+        h1, h2, h3, h4, p, label, div, span {
+            color: #4b2e1e !important; /* بني غامق */
             font-family: 'Cairo', sans-serif;
         }
-        .custom-logo {
+        .logo {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
+            width: 100px;
         }
         footer {visibility: hidden;}
     </style>
@@ -42,14 +43,14 @@ st.title("حكايا أجدادنا")
 # العبارة التراثية
 st.markdown("### نحفظ تراثنا.. بصوت أجدادنا 🎤")
 
-# خيارات التطبيق
+# واجهة المستخدم
 st.subheader("أضف حكايتك أو استعرض الحكايات")
 
-# إعداد مجلد الحكايات
+# مجلد الحكايات
 folder = "حكايات"
 os.makedirs(folder, exist_ok=True)
 
-# اختيار الوضع
+# اختيار العملية
 option = st.radio("اختر ما ترغب بفعله:", ["إضافة حكاية", "عرض الحكايات"])
 
 if option == "إضافة حكاية":
