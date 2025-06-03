@@ -1,14 +1,14 @@
 import streamlit as st
 import os
 
-# إعدادات الصفحة
+‎# إعدادات الصفحة
 st.set_page_config(
     page_title="حكايا أجدادنا",
     page_icon="🧓🏻",
     layout="centered"
 )
 
-# تخصيص الستايل (ألوان، خط، خلفية، شعار)
+‎# تخصيص التصميم (ألوان + خط + لوقو)
 st.markdown("""
     <style>
         body {
@@ -20,8 +20,8 @@ st.markdown("""
             border-radius: 15px;
             border: 2px solid #c8b28e;
         }
-        h1, h2, h3, h4, p, label, .stTextInput label, .stTextArea label {
-            color: #4a2e1f;
+        h1, h2, h3, h4, p, label, div, span {
+            color: #4b2e1e !important; /* بني غامق */
             font-family: 'Cairo', sans-serif;
         }
         .logo {
@@ -34,23 +34,23 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# عرض الشعار
+‎# عرض الشعار
 st.image("logo.png", width=100)
 
-# عنوان التطبيق
+‎# عنوان التطبيق
 st.title("حكايا أجدادنا")
 
-# العبارة التراثية
+‎# العبارة التراثية
 st.markdown("### نحفظ تراثنا.. بصوت أجدادنا 🎤")
 
-# خيارات التطبيق
+‎# واجهة المستخدم
 st.subheader("أضف حكايتك أو استعرض الحكايات")
 
-# مجلد الحكايات
+‎# مجلد الحكايات
 folder = "حكايات"
 os.makedirs(folder, exist_ok=True)
 
-# اختيار الوضع
+‎# اختيار العملية
 option = st.radio("اختر ما ترغب بفعله:", ["إضافة حكاية", "عرض الحكايات"])
 
 if option == "إضافة حكاية":
@@ -70,14 +70,10 @@ if option == "إضافة حكاية":
             st.error("❌ كلمة السر غير صحيحة.")
 
 elif option == "عرض الحكايات":
-    password = st.text_input("أدخل كلمة السر لعرض الحكايات", type="password")
-    if password == "Raedah112233434":
-        stories = os.listdir(folder)
-        if not stories:
-            st.info("لا توجد حكايات محفوظة بعد.")
-        else:
-            selected = st.selectbox("اختر الحكاية", stories)
-            with open(f"{folder}/{selected}", "r", encoding="utf-8") as f:
-                st.text(f.read())
-    elif password:
-        st.error("❌ كلمة السر غير صحيحة.")
+    stories = os.listdir(folder)
+    if not stories:
+        st.info("لا توجد حكايات محفوظة بعد.")
+    else:
+        selected = st.selectbox("اختر الحكاية", stories)
+        with open(f"{folder}/{selected}", "r", encoding="utf-8") as f:
+            st.text(f.read())
