@@ -8,10 +8,10 @@ st.set_page_config(
     layout="centered"
 )
 
-# تخصيص الستايل
+# تخصيص التصميم
 st.markdown("""
     <style>
-        body {
+        .main {
             background-color: #f5f0e6;
         }
         .block-container {
@@ -20,15 +20,14 @@ st.markdown("""
             border-radius: 15px;
             border: 2px solid #c8b28e;
         }
-        h1, h2, h3, h4 {
+        h1, h2, h3 {
             color: #5c4328;
             font-family: 'Cairo', sans-serif;
         }
-        .logo {
+        .custom-logo {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 100px;
+            top: 20px;
+            right: 20px;
         }
         footer {visibility: hidden;}
     </style>
@@ -37,8 +36,43 @@ st.markdown("""
 # عرض الشعار
 st.image("logo.png", width=100)
 
-# ✅ عنوان التطبيق
+# عنوان التطبيق
 st.title("حكايا أجدادنا")
 
-# ✅ العبارة التراثية
+# العبارة التراثية
 st.markdown("### نحفظ تراثنا.. بصوت أجدادنا 🎤")
+
+# خيارات التطبيق
+st.subheader("أضف حكايتك أو استعرض الحكايات")
+
+# إعداد مجلد الحكايات
+folder = "حكايات"
+os.makedirs(folder, exist_ok=True)
+
+# اختيار الوضع
+option = st.radio("اختر ما ترغب بفعله:", ["إضافة حكاية", "عرض الحكايات"])
+
+if option == "إضافة حكاية":
+    title = st.text_input("عنوان الحكاية")
+    content = st.text_area("نص الحكاية")
+    password = st.text_input("كلمة السر", type="password")
+
+    if st.button("حفظ"):
+        if password == "Raedah112233434":
+            if title and content:
+                with open(f"{folder}/{title}.txt", "w", encoding="utf-8") as f:
+                    f.write(content)
+                st.success(f"✅ تم حفظ الحكاية: {title}")
+            else:
+                st.warning("يرجى كتابة عنوان ونص الحكاية.")
+        else:
+            st.error("❌ كلمة السر غير صحيحة.")
+
+elif option == "عرض الحكايات":
+    stories = os.listdir(folder)
+    if not stories:
+        st.info("لا توجد حكايات محفوظة بعد.")
+    else:
+        selected = st.selectbox("اختر الحكاية", stories)
+        with open(f"{folder}/{selected}", "r", encoding="utf-8") as f:
+            st.text(f.read())
