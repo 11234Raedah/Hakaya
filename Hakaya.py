@@ -13,6 +13,8 @@ st.markdown("""
     <style>
         body {
             background-color: #f5f0e6;
+            color: #3b2f1a;  /* لون الخط بني غامق للنص */
+            font-family: 'Cairo', sans-serif;
         }
         .block-container {
             background-color: #fffdf7;
@@ -20,8 +22,8 @@ st.markdown("""
             border-radius: 15px;
             border: 2px solid #c8b28e;
         }
-        h1, h2, h3, h4 {
-            color: #5c4328;
+        h1, h2, h3, h4, p, label, .stTextInput>div>div>input {
+            color: #3b2f1a !important;
             font-family: 'Cairo', sans-serif;
         }
         .logo {
