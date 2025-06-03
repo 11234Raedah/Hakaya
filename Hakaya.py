@@ -1,37 +1,80 @@
 import streamlit as st
 import os
 
-FOLDER = "hikayat"
-if not os.path.exists(FOLDER):
-    os.makedirs(FOLDER)
+# إعدادات الصفحة
+st.set_page_config(
+    page_title="حكايا أجدادنا",
+    page_icon="🧓🏻",
+    layout="centered"
+)
 
-st.title("📚 حكايا أجدادنا")
-st.write("منصة لتوثيق ومشاركة قصص الأجداد")
+# تخصيص الستايل (ألوان، خط، خلفية)
+st.markdown("""
+    <style>
+        body {
+            background-color: #f5f0e6;
+        }
+        .block-container {
+            background-color: #fffdf7;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #c8b28e;
+        }
+        h1, h2, h3, h4 {
+            color: #5c4328;
+            font-family: 'Cairo', sans-serif;
+        }
+        .logo {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 100px;
+        }
+        footer {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
 
-tab1, tab2 = st.tabs(["✍️ أرسل حكايتك", "🔒 عرض الحكايات (خاص)"])
+# عرض الشعار
+st.image("logo.png", width=100)
 
-with tab1:
-    title = st.text_input("عنوان الحكاية", key="title_input")
-    story = st.text_area("اكتب الحكاية هنا", key="story_textarea")
-    if st.button("حفظ الحكاية", key="save_button"):
-        if title and story:
-            with open(f"{FOLDER}/{title}.txt", "w", encoding="utf-8") as f:
-                f.write(story)
-            st.success("✅ تم حفظ الحكاية بنجاح!")
+# عنوان التطبيق
+st.title("حكايا أجدادنا")
+
+# العبارة التراثية
+st.markdown("### نحفظ تراثنا.. بصوت أجدادنا 🎤")
+
+# خيارات التطبيق
+st.subheader("أضف حكايتك أو استعرض الحكايات")
+
+# مجلد الحكايات
+folder = "حكايات"
+os.makedirs(folder, exist_ok=True)
+
+# اختيار الوضع
+option = st.radio("اختر ما ترغب بفعله:", ["إضافة حكاية", "عرض الحكايات"])
+
+if option == "إضافة حكاية":
+    title = st.text_input("عنوان الحكاية")
+    content = st.text_area("نص الحكاية")
+    password = st.text_input("كلمة السر", type="password")
+
+    if st.button("حفظ"):
+        if password == "Raedah112233434":
+            if title and content:
+                with open(f"{folder}/{title}.txt", "w", encoding="utf-8") as f:
+                    f.write(content)
+                st.success(f"✅ تم حفظ الحكاية: {title}")
+            else:
+                st.warning("يرجى كتابة عنوان ونص الحكاية.")
         else:
-            st.warning("⚠️ الرجاء كتابة عنوان ونص الحكاية.")
+            st.error("❌ كلمة السر غير صحيحة.")
 
-with tab2:
-    password = st.text_input("أدخل كلمة المرور لعرض الحكايات", type="password", key="password_input")
-    if password == "Raedah112233434":
-        files = os.listdir(FOLDER)
-        if not files:
-            st.info("لا توجد حكايات محفوظة بعد.")
-        else:
-            for filename in files:
-                with open(f"{FOLDER}/{filename}", "r", encoding="utf-8") as f:
-                    content = f.read()
-                st.subheader(f"📌 {filename.replace('.txt', '')}")
-                st.write(content)
-    elif password != "":
-        st.error("🚫 كلمة المرور خاطئة!")
+elif option == "عرض الحكايات":
+    stories = os.listdir(folder)
+    if not stories:
+        st.info("لا توجد حكايات محفوظة بعد.")
+    else:
+        selected = st.selectbox("اختر الحكاية", stories)
+        with open(f"{folder}/{selected}", "r", encoding="utf-8") as f:
+            st.text(f.read())
+            تحديث الواجهة وإضافة الحماية بكلمة سر
